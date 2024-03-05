@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SpeedMath | Log In</title>
+    <link href="{% static 'users/mainStyling.css' %}" rel="stylesheet">
+    <link href="{% static 'users/loginStyling.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="mainContent">
+        {% if message %}
+            <div class="{{ message.class }}">
+                <p class="smTitle">{{ message.type }}</p>
+                <p class="smBody">{{ message.text }}</p>
+            </div>
+        {% endif %}
+        <form class="vertFlex card" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input class="inputField" type="text" name="username" placeholder="Username">
+            <input class="inputField" type="password" name="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

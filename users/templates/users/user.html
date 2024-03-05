@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Authentication</title>
+    <link href="{% static 'users/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Welcome, {{ request.user.first_name }}</h1>
+    <ul>
+        <li>Username: {{ request.user.username }}</li>
+        <li>Email: {{ request.user.email }}</li>
+    </ul>
+    <a href="{% url 'logout' %}">Log Out</a>
+
+</body>
+</html>

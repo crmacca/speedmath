@@ -1,0 +1,54 @@
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 20vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.vertFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    min-width: 100%;
+}
+
+.successBox {
+    background-color: rgba(47, 206, 89, 0.576);
+    border: 1px rgb(45, 216, 82) solid;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 100%;
+}
+
+.errorBox {
+    background-color: rgba(255, 71, 71, 0.576);
+    border: 1px rgb(255, 110, 110) solid;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .mainContent {
+        background-color: black;
+    }
+  }
+  
+.smTitle {
+    font-size: 1rem;
+    font-weight: 700;
+}
+.smBody {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
