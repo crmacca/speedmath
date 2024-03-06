@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, p, a {
+    font-family: 'Inter', sans-serif;
+}
+
+button {
+    background-color: rgb(37, 107, 188);
+    border-radius: 15px;
+    color: white;
+    padding: 15px 20px; /* Updated padding */
+    border: 1px rgba(255, 255, 255, 0.32) solid;
+    cursor: pointer;
+}
+
+.inputField {
+    padding: 15px 20px; /* Updated padding */
+    background: white;
+    border: 1px rgba(200, 200, 200, 0.506) solid;
+    border-radius: 15px;
+}
+
+.lgLogo {
+    width: 150px;
+    height: 150px;
+}
+.xlLogo {
+    width: 35vh;
+    height: 35vh;
+}
+
+.smLogo {
+    width: 45px;
+    height: 45px;
+}
+
+.svgIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.simpleFooter {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px 5px;
+    background-color: white;
+    display: flex;
+    width: 100vw;
+    justify-content: center; 
+    align-items: center;
+    color: rgba(0, 0, 0, 0.482);
+    font-size: small;
+}
