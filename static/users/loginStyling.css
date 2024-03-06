@@ -72,3 +72,9 @@ a:hover, a:active { text-decoration: none; color:black }
         max-width: none;
     }
 }
+
+.hyperlink {
+    text-decoration: underline;
+    font-size: small;
+    cursor: pointer;
+}

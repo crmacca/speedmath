@@ -7,6 +7,12 @@
         <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     </head>
     <body>
-        
+         <!-- Home Page -->
+        <div>
+            <h1>Welcome to SpeedMath</h1>
+            <p>SpeedMath is a fun and interactive way to improve your math skills. You can practice your math skills by playing games and competing with other users. You can also track your progress and see how you compare to other users.</p>
+            <a href="{% url 'login' %}">Log In</a>
+            <a href="{% url 'signup' %}">Register</a>
+        </div>
     </body>
 </html>

@@ -18,13 +18,15 @@
                     <p class="smBody">{{ message.text }}</p>
                 </div>
             {% endif %}
-            <form class="colFlex card" action="{% url 'login' %}" method="post">
+            <form class="colFlex card" action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
+                <input class="inputField" type="text" name="name" placeholder="Name">
                 <input class="inputField" type="text" name="username" placeholder="Username">
                 <input class="inputField" type="password" name="password" placeholder="Password">
-                <button type="submit">Login</button>
-                <a class="hyperlink" href="{% url 'signup' %}">
-                    Don't have an account? Create one!
+                <input class="inputField" type="password" name="confirmPassword" placeholder="Confirm Password">
+                <button type="submit">Create my account!</button>
+                <a class="hyperlink" href="{% url 'login' %}">
+                    Already have an account? Login
                 </a>
             </form>
         </div>
