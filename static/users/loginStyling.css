@@ -52,19 +52,6 @@
     font-size: 0.8rem;
     font-weight: 500;
 }
-
-/* START ONLINE CSS COPY */
-/* PUSPOSE OF CODE: REMOVE BLUE AND PURPLE COLOURING FROM HYPERLINKS */
-/* Source: https://stackoverflow.com/a/10312896/13743859 */
-
-a { color: black; text-decoration: none;}
-
-a:visited { text-decoration: none; color:black; }
-a:hover { text-decoration: none; color:black; }
-a:focus { text-decoration: none; color:black; }
-a:hover, a:active { text-decoration: none; color:black }
-/* END ONLINE CSS COPY */
-
 /* Media Query for Mobile Devices */
 @media (max-width: 600px) {
     .mainContent {

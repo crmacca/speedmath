@@ -10,6 +10,32 @@ h1, h2, h3, h4, h5, p, a {
     font-family: 'Inter', sans-serif;
 }
 
+.bg {
+    background-color: rgb(248, 250, 255);
+    height: 100vh;
+    width: 100vw;
+}
+
+.navButton {
+    border: 2px solid rgb(212, 212, 212);
+    background-color: white;
+    color: black;
+    font-weight: 500;
+    padding: 10px 20px;
+}
+
+.navButtonActive {
+    border: 2px solid rgb(212, 212, 212);
+    background-color: rgb(212, 212, 212);
+    color: black;
+    font-weight: 500;
+    padding: 10px 20px;
+}
+
+.mlAuto {
+    margin-left: auto;
+}
+
 button {
     background-color: rgb(37, 107, 188);
     border-radius: 15px;
@@ -36,8 +62,8 @@ button {
 }
 
 .smLogo {
-    width: 45px;
-    height: 45px;
+    width: 10rem;
+    height: 10rem;
 }
 
 .svgIcon {
@@ -57,4 +83,34 @@ button {
     align-items: center;
     color: rgba(0, 0, 0, 0.482);
     font-size: small;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 20px;
+}
+
+/* START ONLINE CSS COPY */
+/* PUSPOSE OF CODE: REMOVE BLUE AND PURPLE COLOURING FROM HYPERLINKS */
+/* Source: https://stackoverflow.com/a/10312896/13743859 */
+
+a { color: black; text-decoration: none;}
+
+a:visited { text-decoration: none; color:black; }
+a:hover { text-decoration: none; color:black; }
+a:focus { text-decoration: none; color:black; }
+a:hover, a:active { text-decoration: none; color:black }
+/* END ONLINE CSS COPY */
+
+.vertFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bold {
+    font-weight: 600;
+    font-size: large;
 }

@@ -8,11 +8,25 @@
     </head>
     <body>
          <!-- Home Page -->
-        <div>
-            <h1>Welcome to SpeedMath</h1>
-            <p>SpeedMath is a fun and interactive way to improve your math skills. You can practice your math skills by playing games and competing with other users. You can also track your progress and see how you compare to other users.</p>
-            <a href="{% url 'login' %}">Log In</a>
-            <a href="{% url 'signup' %}">Register</a>
+        <div class="bg">
+            <div class="navbar">
+                <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
+                    {% if greeting and request.user.is_authenticated %}
+                        <div class="vertFlex">
+                            <p class="bold">{{ greeting }}</p>
+                            <p>{{ request.user.username }}</p>
+                        </div>
+                    {% endif %}
+                <button class="navButtonActive mlAuto">
+                    <a href="{% url 'logout' %}">New Quiz</a>
+                </button>
+                <button class="navButton">
+                    <a href="{% url 'logout' %}">Quiz History</a>
+                </button>
+                <button class="navButton">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </button>
+            </div>
         </div>
     </body>
 </html>
