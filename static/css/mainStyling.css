@@ -181,10 +181,10 @@ a:hover, a:active { text-decoration: none; color:black }
     margin-bottom: 20px;
   }
 
-  select {
+select {
     padding: 15px 20px; /* Updated padding */
     background: white;
     border: 1px rgba(200, 200, 200, 0.506) solid;
     border-radius: 15px;
     cursor: pointer;
-  }
+}

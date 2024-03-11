@@ -22,5 +22,18 @@ window.onload = function() {
     var createForm = document.getElementById("createForm");
     createForm.onsubmit = function(e) {
         e.preventDefault(); //Prevents the form from submitting an API request.
+
+        var isAnyMathTypeSelected = 
+            document.getElementById('addition').checked ||
+            document.getElementById('subtraction').checked ||
+            document.getElementById('division').checked ||
+            document.getElementById('multiplication').checked;
+    
+        // If no math type is selected, prevent form submission and alert the user
+        if (!isAnyMathTypeSelected) {
+            alert('Please select at least one type of math to practice.');
+            return
+        }
     }
+
 }
