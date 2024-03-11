@@ -16,6 +16,21 @@ h1, h2, h3, h4, h5, p, a {
     width: 100vw;
 }
 
+.blueText {
+    color: rgb(37, 107, 188);
+
+}
+
+.bold {
+    font-weight: 600;
+    font-size: large;
+}
+
+.lgText {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
 .navButton {
     border: 2px solid rgb(212, 212, 212);
     background-color: white;
@@ -110,7 +125,66 @@ a:hover, a:active { text-decoration: none; color:black }
     gap: 5px;
 }
 
-.bold {
-    font-weight: 600;
-    font-size: large;
+.horiFlex {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
+
+/* START ONLINE CSS COPY */
+/* PUSPOSE OF CODE: MODAL STYLING TO CREATE QUIZ / EDIT / ALL OTHER MODAL BASED FUNCTIONS */
+/* Source: https://www.w3schools.com/howto/howto_css_modals.asp */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    border-radius: 15px;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Could be more or less, depending on screen size */
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  /* The Close Button */
+  .close {
+    margin-left: auto;
+    color: #f13d3d;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  /* END ONLINE CSS COPY */
+
+  .mb2 {
+    margin-bottom: 20px;
+  }
+
+  select {
+    padding: 15px 20px; /* Updated padding */
+    background: white;
+    border: 1px rgba(200, 200, 200, 0.506) solid;
+    border-radius: 15px;
+    cursor: pointer;
+  }

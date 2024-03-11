@@ -5,27 +5,57 @@
         <title>SpeedMath | Home</title>
         <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        <script src="{% static 'js/appIndex.js' %}"></script>
     </head>
     <body>
          <!-- Home Page -->
         <div class="bg">
+            <div id="createModal" class="modal">
+                <div class="modal-content">
+                    <div class="horiFlex mb2">
+                        <p class="bold lgText blueText">Create a quiz</p>
+                        <span class="close">&times;</span>
+                    </div>
+                    <form id="createForm" class="vertFlex">
+                        <label for="questions">Amount of questions</label>
+                        <select name="questions" id="questions">
+                            <option value="10">10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                            <option value="30">30 Questions</option>
+                            <option value="40">40 Questions</option>
+                            <option value="50">50 Questions</option>
+                          </select>
+                    </form>
+                </div>
+            </div>
+
             <div class="navbar">
-                <img src="{% static 'images/roundedIcon.png' %}" alt="SpeedMath Logo" class="smLogo">
+                <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
                     {% if greeting and request.user.is_authenticated %}
                         <div class="vertFlex">
                             <p class="bold">{{ greeting }}</p>
                             <p>{{ request.user.username }}</p>
                         </div>
                     {% endif %}
-                <button class="navButtonActive mlAuto">
-                    <a href="{% url 'logout' %}">New Quiz</a>
+                <button id="createQuizBtn" class="navButtonActive mlAuto">
+                    New Quiz
                 </button>
-                <button class="navButton">
-                    <a href="{% url 'logout' %}">Quiz History</a>
-                </button>
-                <button class="navButton">
-                    <a href="{% url 'logout' %}">Logout</a>
-                </button>
+                <a href="{% url 'logout' %}"></a>
+                    <button class="navButton">
+                        Quiz History
+                    </button>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <button class="navButton">
+                        Logout
+                    </button>
+                </a>
+            </div>
+            <div class="simpleFooter" style="border-top: 1px solid rgb(37, 107, 188);">
+                <p>
+                    © 2024 Christian McNamara
+                </p>
             </div>
         </div>
     </body>
