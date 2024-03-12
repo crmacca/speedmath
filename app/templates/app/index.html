@@ -26,6 +26,12 @@
                             <option value="40">40 Questions</option>
                             <option value="50">50 Questions</option>
                         </select>
+                        <label for="difficulty">Difficulty*</label>
+                        <select name="difficulty" id="questions" class="mb2" required>
+                            <option value="1">Easy (Aimed Towards Speed)</option>
+                            <option value="2">Normal (Mix of Speed and Mental Strategy)</option>
+                            <option value="3">Hard (Aimed towards building Strategy)</option>
+                        </select>
                         <label class="bold">What would you like to practice?*</label>
                         <div class="horiFlex">
                             <input type="checkbox" name="addition" id="addition">
@@ -56,10 +62,10 @@
 
             <div class="navbar">
                 <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
-                    {% if greeting and request.user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <div class="vertFlex">
-                            <p class="bold">{{ greeting }}</p>
-                            <p>{{ request.user.username }}</p>
+                            <p class="bold lgText" id="greetingText" >Good morning,</p>
+                            <p>@{{ request.user.username }}</p>
                         </div>
                     {% endif %}
                 <button id="createQuizBtn" class="navButtonActive mlAuto">

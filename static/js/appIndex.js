@@ -1,6 +1,37 @@
 console.log('appIndex.js loaded');
 
-window.onload = function() {
+function getGreeting() {
+    var d = new Date();
+    var n = d.getHours();
+    if (n < 12) {
+        return "Good morning,";
+    } else if (n < 17) {
+        return "Good afternoon,";
+    } else {
+        return "Good evening,";
+    }
+
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+window.onload = async function() {
+    document.getElementById('greetingText').textContent = await getGreeting();
+
     var modal = document.getElementById("createModal");
     var btn = document.getElementById("createQuizBtn");
     var span = document.getElementsByClassName("close")[0];
@@ -20,7 +51,7 @@ window.onload = function() {
     }
 
     var createForm = document.getElementById("createForm");
-    createForm.onsubmit = function(e) {
+    createForm.onsubmit = async function(e) {
         e.preventDefault(); //Prevents the form from submitting an API request.
 
         var isAnyMathTypeSelected = 
@@ -34,6 +65,47 @@ window.onload = function() {
             alert('Please select at least one type of math to practice.');
             return
         }
+
+        let questions = e.target[0].value;
+        let difficulty = e.target[1].value;
+        let mathTypes = [];
+        if (document.getElementById('addition').checked) {
+            mathTypes.push('addition');
+        }
+        if (document.getElementById('subtraction').checked) {
+            mathTypes.push('subtraction');
+        }
+        if (document.getElementById('division').checked) {
+            mathTypes.push('division');
+        }
+        if (document.getElementById('multiplication').checked) {
+            mathTypes.push('multiplication');
+        }
+
+        let shuffle = e.target[6].checked;
+
+        const jsonPayload = {
+            questions: parseInt(questions),
+            difficulty: parseInt(difficulty),
+            mathTypes: mathTypes,
+            shuffle: shuffle
+        }
+
+        console.log(jsonPayload)
+
+        const response = await fetch('/createquiz', {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify(jsonPayload),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            
+          });
+        
     }
 
 }
