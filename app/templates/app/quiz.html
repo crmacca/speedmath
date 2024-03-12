@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SpeedMath | Quiz</title>
+        <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        <script src="{% static 'js/navbar.js' %}"></script>
+        <script src="{% static 'js/quiz.js' %}"></script>
+    </head>
+    <body>
+        <span id='quizData' quizData="{{ quizData }}"/>
+        <div class="bg">
+            <div class="navbar">
+                <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
+                {% if request.user.is_authenticated %}
+                    <div class="vertFlex">
+                        <p class="bold lgText" id="greetingText" >Good morning,</p>
+                        <p>@{{ request.user.username }}</p>
+                    </div>
+                {% endif %}
+                <a class="mlAuto pointer" href="/">
+                    <button id="createQuizBtn" class="navButton">
+                        Exit Quiz
+                    </button>
+                </a>
+                <button id="createQuizBtn" class="navButtonDanger">
+                    Delete Quiz
+                </button>
+            </div>
+
+            <div>
+                <div class="quizContainer">
+                    <div class="quizHeader">
+                        <div class="mb2 horiFlex justifyStart">
+                            <h1 id="currentQuestionNumber">-</h1>
+
+                            <div class="progressBarContainer">
+                                <div class="progressBar" id="progressBar"></div>
+                            </div>
+                        </div>
+                        <h1 class="lgText bold">Quiz</h1>
+                        <p class="mdText mb2">Answer the following questions as quickly as possible.</p>
+
+                        <form id="quizForm" class="fullWidth">
+                            <div class="horiFlex mb2 fullWidth justifyCentre">
+                                <label id="formQuestion" class="xxlText">Question Loading... </label>
+                                <input id="formInput" maxlength="4" class="quizInput xlText" required>
+                                <h1 class="hidden" id="correct">
+                                    ✅
+                                </h1>
+                                <h1 class="hidden" id="incorrect">
+                                    ❌
+                                </h1>
+                            </div>
+                            <button id="submitQuizBtn" class="fullWidth" type="submit">
+                                Submit
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="simpleFooter" style="border-top: 1px solid rgb(37, 107, 188);">
+                <p>
+                    © 2024 Christian McNamara
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

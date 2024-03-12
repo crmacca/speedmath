@@ -1,47 +1,16 @@
-console.log('appIndex.js loaded');
-
-function getGreeting() {
-    var d = new Date();
-    var n = d.getHours();
-    if (n < 12) {
-        return "Good morning,";
-    } else if (n < 17) {
-        return "Good afternoon,";
-    } else {
-        return "Good evening,";
-    }
-
-}
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-
-window.onload = async function() {
-    document.getElementById('greetingText').textContent = await getGreeting();
+window.addEventListener('load', async function() {
+  console.log('index.js loaded');
 
     var modal = document.getElementById("createModal");
     var btn = document.getElementById("createQuizBtn");
     var span = document.getElementsByClassName("close")[0];
     
     btn.onclick = function() {
-    modal.style.display = "block";
+      modal.style.display = "block";
     }
     
     span.onclick = function() {
-    modal.style.display = "none";
+      modal.style.display = "none";
     }
     
     window.onclick = function(event) {
@@ -102,10 +71,25 @@ window.onload = async function() {
           })
           .then(response => response.json())
           .then(data => {
-            console.log(data);
-            
+            window.location.pathname = `/quiz/${data.quizId}`;
           });
         
     }
 
+});
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
