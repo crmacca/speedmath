@@ -29,7 +29,7 @@
                 </button>
             </div>
 
-            <div>
+            <div class="scrollPadding">
                 <div class="quizContainer">
                     <div class="quizHeader">
                         <div class="mb2 horiFlex justifyStart">
@@ -39,13 +39,14 @@
                                 <div class="progressBar" id="progressBar"></div>
                             </div>
                         </div>
-                        <h1 class="lgText bold">Quiz</h1>
-                        <p class="mdText mb2">Answer the following questions as quickly as possible.</p>
-
                         <form id="quizForm" class="fullWidth">
+                            <div>
+                                <h1 class="lgText bold">Quiz</h1>
+                                <p class="mdText mb2">Answer the following questions as quickly as possible.</p>
+                            </div>
                             <div class="horiFlex mb2 fullWidth justifyCentre">
                                 <label id="formQuestion" class="xxlText">Question Loading... </label>
-                                <input id="formInput" maxlength="4" class="quizInput xlText" required>
+                                <input autocomplete="off" id="formInput" maxlength="4" class="quizInput xlText" required>
                                 <h1 class="hidden" id="correct">
                                     ✅
                                 </h1>
@@ -57,6 +58,30 @@
                                 Submit
                             </button>
                         </form>
+
+                        <div id="results" class="vertFlex lgGap">
+                            <div>
+                                <p class="bold xxlText">
+                                    Results
+                                </p>
+                                <p class="xlText" id="resultSummary">
+                                    Loading...
+                                </p>
+                            </div>
+                            <div id="questionTemplate" class="question">
+                                <h1 id="questionNumber" class="lgText bold mb2">Question 1</h1>
+                                <div class="horiFlex mb2 fullWidth justifyStart">
+                                    <label id="questionText" class="xlText">2+2 = </label>
+                                    <input disabled="true" id="questionAnswer" maxlength="4" class="quizInput xlText" value="4">
+                                    <h1 class="hidden" id="correct">
+                                        ✅
+                                    </h1>
+                                    <h1 class="hidden" id="incorrect">
+                                        ❌
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

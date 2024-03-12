@@ -36,10 +36,15 @@ def is_valid_uuid(uuid_to_test, version=4):
     return str(uuid_obj) == uuid_to_test
 
 def generate_questions(config):
+    # 1. Get the number of questions to generate
     questions_count = config['questions']
+    # 2. Get the types of math questions to generate
     math_types = config['mathTypes']
+    # 3. Determine if questions should be shuffled
     shuffle_questions = config['shuffle']
-    difficulty = config.get('difficulty', 1)  # Default to easy if not specified
+    # 4. Determine the difficulty level, default to easy if not specified
+    difficulty = config.get('difficulty', 1)
+    # 5. Initialize an empty list to store generated questions
     questions = []
 
     # Define number ranges based on difficulty
@@ -100,21 +105,26 @@ def generate_questions(config):
 
     # Generate questions
     for math_type in math_types:
-        for _ in range(questions_count // len(math_types)):
-            questions.append(type_function_mapping[math_type]())
-
+        for i in range(questions_count // len(math_types)):
+            question = type_function_mapping[math_type]()
+            questions.append({"id": len(questions) + 1, **question})  # Add question number
     # Shuffle if needed
     if shuffle_questions:
         random.shuffle(questions)
+    # Update question numbers after shuffle
+    for i, question in enumerate(questions):
+        question['id'] = i + 1
 
     # If the division of questions is not exact, handle the remaining questions
     remaining_questions = questions_count % len(math_types)
     if remaining_questions > 0:
         additional_types = math_types[:remaining_questions]
         for math_type in additional_types:
-            questions.append(type_function_mapping[math_type]())
+            question = type_function_mapping[math_type]()
+            questions.append({"id": len(questions) + 1, **question})  # Add question number
 
     return questions
+
 
 @login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
 def index(request):
@@ -127,6 +137,7 @@ def quiz_viewer(request, id):
         if quizData and quizData.user == request.user:
             return render(request, "app/quiz.html", {
                     "quizData": json.dumps({
+                        "id": str(quizData.id),
                         "unanswered": quizData.unanswered,
                         "incorrectlyAnswered": quizData.incorrectlyAnswered or [],
                         "correctlyAnswered": quizData.correctlyAnswered or [],
@@ -162,3 +173,56 @@ def create_quiz(request):
     # If not POST, indicate the method is not allowed
     return HttpResponseBadRequest("Method not allowed")
 
+@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+def submit_answer(request):
+    if request.method == "POST":
+
+                # Attempt to parse JSON from the request body
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest("Invalid JSON")
+
+        # Validate that all required fields are present
+        required_fields = ['quizId', 'answer', 'questionId']
+        if not all(field in data for field in required_fields):
+            return HttpResponseBadRequest("Missing required fields")
+
+        quizData = Quiz.objects.get(id=data['quizId'])
+        if quizData and quizData.user == request.user:
+
+            if len(quizData.unanswered) == 0:
+                return JsonResponse({"success": False, "message": "No more questions to answer, please reload the page, the client may have fallen out of sync with the server."})
+
+            currentQ = quizData.unanswered[0]
+
+            if not int(currentQ['id']) == int(data['questionId']):
+                return JsonResponse({"success": False, "message": "The client has fallen out of sync with the server, please reload the page."})
+
+            if int(data['answer']) == int(currentQ['answer']):
+                if quizData.correctlyAnswered == {}:
+                    quizData.correctlyAnswered = [quizData.unanswered.pop(0)]
+                else:
+                    quizData.correctlyAnswered.append(quizData.unanswered.pop(0))
+            else:
+                questionData = quizData.unanswered.pop(0)
+                if quizData.incorrectlyAnswered == {}:
+                    quizData.incorrectlyAnswered = [{
+                        "type": questionData['type'],
+                        "question": questionData['question'],
+                        "answer": questionData['answer'],
+                        "userAnswer": data['answer'],
+                        "id": questionData['id']
+                    }]
+                else:
+                    quizData.incorrectlyAnswered.append(
+                        {
+                        "type": questionData['type'],
+                        "question": questionData['question'],
+                        "answer": questionData['answer'],
+                        "userAnswer": data['answer'],
+                        "id": questionData['id']
+                        }
+                    )
+            quizData.save()
+            return JsonResponse({"success": True, "correct": int(data['answer']) == int(currentQ['answer'])})

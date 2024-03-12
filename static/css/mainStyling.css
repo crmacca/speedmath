@@ -278,3 +278,35 @@ input {
     width: 0%; /* Initial width of the progress bar */
     transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
 }
+
+#incorrect {
+    color: red;
+}
+
+#quizForm {
+    display: none;
+}
+
+.question {
+    background-color: #f3f3f3;
+    padding: 20px; 
+    border-radius: 15px;
+}
+
+#questionTemplate {
+    display: none;
+}
+
+#results {
+    display: none;
+}
+
+.scrollPadding {
+    padding: 5vw;
+    padding-top: 0;
+}
+
+#lgGap {
+    gap: 15px;
+    column-gap: 15px;
+}
