@@ -215,23 +215,6 @@ select {
     justify-content: center;
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 8px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    height: 20px;
-    position: relative;
-}
-
-.progress-bar-filler {
-    height: 100%;
-    background-color: #4CAF50;
-    border-radius: 8px 0 0 8px; /* smooth corners on the left side */
-    transition: width 0.6s ease; /* smooth width transition */
-    width: 0%; /* Default width. Can be changed inline or with JavaScript */
-}
-
 .quizContainer {
     display: flex;
     flex-direction: column;
