@@ -128,6 +128,9 @@ def generate_questions(config):
 
 @login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
 def index(request):
+
+    #usersQuizes = []
+    #userQuizes = Quiz.objects.filter(user=request.user)
     return render(request, "app/index.html")
 
 @login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")

@@ -28,7 +28,6 @@ window.onload = () => {
         combinedQuestions.push(...incorrectlyAnswered.map((q) => ({...q, correct: false})));
         combinedQuestions.push(...correctlyAnswered.map((q) => ({...q, correct: true})));
         combinedQuestions.sort((a, b) => a.id - b.id);
-        console.log(combinedQuestions)
 
         var questionTemplate = await document.getElementById('questionTemplate');
         var answerHolder = await document.getElementById('results');
@@ -45,7 +44,7 @@ window.onload = () => {
 
             questionNumber.innerHTML = `Question ${question.id}`;
             questionText.innerHTML = question.question;
-            questionAnswer.innerHTML = question.correct ? question.answer : question.userAnswer;
+            questionAnswer.value = question.correct ? question.answer : question.userAnswer;
             
             if(question.correct) {
                 questionCorrect.style.display = 'block';

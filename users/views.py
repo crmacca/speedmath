@@ -48,17 +48,6 @@ def signup_view(request):
 
         if password == confirmPassword:
             try:
-                alreadyExisting = User.objects.get(username=username)
-
-                if alreadyExisting :
-                    return render(request, "users/signup.html", {
-                        "message": {
-                            "text": "Username taken, please try another one.",
-                            "type": "Error",
-                            "class": "errorBox"
-                        }
-                    })
-
                 user = User.objects.create_user(username, password)
                 user.save()
                 
