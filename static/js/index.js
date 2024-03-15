@@ -1,6 +1,13 @@
 window.addEventListener('load', async function() {
   console.log('index.js loaded');
 
+  function decodeHtmlEntity(encodedJson) {
+    const decodedJson = encodedJson.replace(/&quot;/g, '"');
+    return decodedJson;
+}
+
+  console.log(JSON.parse(decodeHtmlEntity(quizzes)))
+
     var modal = document.getElementById("createModal");
     var btn = document.getElementById("createQuizBtn");
     var span = document.getElementsByClassName("close")[0];

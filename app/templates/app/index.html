@@ -7,9 +7,11 @@
         <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
         <script src="{% static 'js/index.js' %}"></script>
         <script src="{% static 'js/navbar.js' %}"></script>
+        <script>
+            let quizzes = "{{ quizzes }}"
+        </script>
     </head>
     <body>
-         <!-- Home Page -->
         <div class="bg">
             <div id="createModal" class="modal">
                 <div class="modal-content">
@@ -83,6 +85,29 @@
                     </button>
                 </a>
             </div>
+
+            <div class="vertFlex">
+
+                <div class="quizCard hidden justifyStart">
+                    <div class="incomplete boldText horiFlex smText">
+                        <img src="{% static 'images/explimation.svg' %}" class="smIcon"/>
+                        <h1>INCOMPLETE</h1>
+                    </div>
+                    <div>
+                    <p class="bold xlText blueText">Addition + Subtraction</p>
+                    <p class="blueText">Current Completion State</p>
+                    <div class="horiFlex fullWidth blueText">
+                        <p>
+                            1/10
+                        </p>
+                        <div class="progressBarContainer">
+                            <div style="width:50%" class="progressBar" id="progressBar"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="simpleFooter" style="border-top: 1px solid rgb(37, 107, 188);">
                 <p>
                     © 2024 Christian McNamara

@@ -8,5 +8,8 @@ class Quiz(models.Model):
     incorrectlyAnswered = models.JSONField(default=dict, blank=True, null=True)
     correctlyAnswered = models.JSONField(default=dict, blank=True, null=True)
     completed = models.BooleanField(default=False)
-    revised = models.BooleanField(default=False)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='quizzes')
+    def __str__(self):
+        return (f"Quiz ID: {self.id}, User: {self.user.username}, "
+                f"Unanswered: {self.unanswered}, Incorrectly Answered: {self.incorrectlyAnswered}, "
+                f"Correctly Answered: {self.correctlyAnswered}, Completed: {self.completed},")

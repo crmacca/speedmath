@@ -310,3 +310,28 @@ input {
     gap: 15px;
     column-gap: 15px;
 }
+
+.quizCard {
+    width: 60%;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px rgba(128, 128, 128, 0.598) solid;
+    padding: 20px;
+    padding-right: 40px;
+    border-radius: 15px;
+    color: black;
+    cursor: pointer;
+}
+
+.incomplete {
+    color: rgb(255, 212, 59)
+}
+
+.smIcon {
+    width: 3vh;
+    height: 3vh;
+}
+
+.smText {
+    font-size: .7rem;
+}

@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core import serializers
 from app.models import Quiz
 from uuid import UUID
 import json
@@ -126,14 +127,16 @@ def generate_questions(config):
     return questions
 
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
 def index(request):
 
-    #usersQuizes = []
-    #userQuizes = Quiz.objects.filter(user=request.user)
-    return render(request, "app/index.html")
+    querySetQuizzes = Quiz.objects.filter(user=request.user)
+    userQuizzes = serializers.serialize('json', querySetQuizzes)
+    return render(request, "app/index.html", {
+        "quizzes": userQuizzes
+    })
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
 def quiz_viewer(request, id):
     if is_valid_uuid(id):
         quizData = Quiz.objects.get(id=id)
