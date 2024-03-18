@@ -10,6 +10,19 @@
     </head>
     <body>
         <span id='quizData' quizData="{{ quizData }}"/>
+
+        <!-- Delete Quiz Confirmation Modal -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <div class="horiFlex mb2">
+                    <p class="bold">Are you sure you want to delete this quiz?</p>
+                    <span class="close mlAuto">&times;</span>
+                </div>
+                <button id="confirmDeleteBtn" class="navButtonDanger">Delete</button>
+            </div>
+        </div>
+
+
         <div class="bg">
             <div class="navbar">
                 <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
@@ -20,11 +33,11 @@
                     </div>
                 {% endif %}
                 <a class="mlAuto pointer" href="/">
-                    <button id="createQuizBtn" class="navButton">
+                    <button id="" class="navButton">
                         Exit Quiz
                     </button>
                 </a>
-                <button id="createQuizBtn" class="navButtonDanger">
+                <button id="deleteQuizBtn" class="navButtonDanger">
                     Delete Quiz
                 </button>
             </div>

@@ -74,9 +74,9 @@
                 <button id="createQuizBtn" class="navButtonActive mlAuto">
                     New Quiz
                 </button>
-                <a href="quizhistory">
+                <a href="/">
                     <button class="navButton">
-                        Quiz History
+                        Active Quizzes
                     </button>
                 </a>
                 <a href="{% url 'logout' %}">
@@ -88,7 +88,7 @@
 
             <div class="vertFlex mbLarge" id="quiz-container">
 
-                <h1 class="bold mxAuto hidden" id="noQuizFound">No quizzes found, why not create one?!</h1>
+                <h1 class="bold mxAuto hidden" id="noQuizFound">No complete quizzes found, why not create one?!</h1>
 
                 <div id="quiz-template" class="quizCard hidden justifyStart">
                     <div class="notstarted boldText horiFlex smText hidden">

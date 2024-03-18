@@ -144,6 +144,54 @@ window.onload = () => {
     answerInput.onkeyup = function(e) {
         answerInput.value = e.target.value.replace(/[^-\d]/g, '');
     }
+
+    var deleteModal = document.getElementById('deleteModal');
+    var deleteBtn = document.getElementById('deleteQuizBtn');
+    var closeSpan = deleteModal.getElementsByClassName('close')[0];
+    var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+    // When the user clicks the button, open the modal
+    deleteBtn.onclick = function() {
+        deleteModal.style.display = 'block';
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    closeSpan.onclick = function() {
+        deleteModal.style.display = 'none';
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == deleteModal) {
+            deleteModal.style.display = 'none';
+        }
+    }
+
+    // Handle quiz deletion
+    confirmDeleteBtn.onclick = async function() {
+        // Add your logic to delete the quiz. This might involve sending a request to your server and then redirecting the user or updating the UI accordingly.
+        console.log('Quiz deletion confirmed');
+
+        // Example: Send a DELETE request to your server (You'll need to replace '/deleteQuizEndpoint' with your actual endpoint)
+        const response = await fetch('/quiz/delete', {
+            method: 'DELETE',
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ quizId: dataString.id }) // Make sure to replace 'yourQuizId' with the actual quiz ID
+        });
+
+        if(response.ok) {
+            // Handle success response
+            console.log('Quiz deleted successfully');
+            window.location.href = '/'; // Redirect to home or another appropriate page
+        } else {
+            // Handle error response
+            console.log('Failed to delete quiz');
+        }
+    }
+
 }
 
 function getCookie(cname) { // CHATGPT generated this to isolate the csrf out of the django cookie.
