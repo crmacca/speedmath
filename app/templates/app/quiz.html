@@ -5,11 +5,13 @@
         <title>SpeedMath | Quiz</title>
         <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        <script>
+            let quizData = "{{ quizData }}"
+        </script>
         <script src="{% static 'js/navbar.js' %}"></script>
         <script src="{% static 'js/quiz.js' %}"></script>
     </head>
-    <body>
-        <span id='quizData' quizData="{{ quizData }}"/>
+    <body
 
         <!-- Delete Quiz Confirmation Modal -->
         <div id="deleteModal" class="modal">

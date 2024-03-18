@@ -1,12 +1,16 @@
 window.onload = () => {
     console.log('quiz.js loaded');
-    var dataSpan = document.getElementById('quizData');
 
     var questions = []
     var incorrectlyAnswered = []
     var correctlyAnswered = []
 
-    var dataString = JSON.parse(dataSpan.getAttribute('quizData'));
+    function decodeHtmlEntity(encodedJson) {
+        const decodedJson = encodedJson.replace(/&quot;/g, '"');
+        return decodedJson;
+      }
+
+    var dataString = JSON.parse(decodeHtmlEntity(quizData));
     questions = dataString.unanswered;
     incorrectlyAnswered = dataString.incorrectlyAnswered;
     correctlyAnswered = dataString.correctlyAnswered;
