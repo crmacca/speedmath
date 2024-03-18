@@ -5,7 +5,7 @@
         <title>SpeedMath | Home</title>
         <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-        <script src="{% static 'js/index.js' %}"></script>
+        <script src="{% static 'js/quizHistory.js' %}"></script>
         <script src="{% static 'js/navbar.js' %}"></script>
         <script>
             let quizzes = "{{ quizzes }}"
@@ -74,9 +74,9 @@
                 <button id="createQuizBtn" class="navButtonActive mlAuto">
                     New Quiz
                 </button>
-                <a href="quizhistory">
+                <a href="/">
                     <button class="navButton">
-                        Quiz History
+                        Active Quizzes
                     </button>
                 </a>
                 <a href="{% url 'logout' %}">
@@ -88,26 +88,22 @@
 
             <div class="vertFlex mbLarge" id="quiz-container">
 
-                <h1 class="bold mxAuto hidden" id="noQuizFound">No quizzes found, why not create one?!</h1>
+                <h1 class="bold mxAuto hidden" id="noQuizFound">No complete quizzes found, why not create one?!</h1>
 
                 <div id="quiz-template" class="quizCard hidden justifyStart">
-                    <div class="notstarted boldText horiFlex smText hidden">
-                        <img src="{% static 'images/circleX.svg' %}" class="smIcon"/>
-                        <h1>NOT STARTED</h1>
-                    </div>
-                    <div class="incomplete boldText horiFlex smText hidden">
-                        <img src="{% static 'images/explimation.svg' %}" class="smIcon"/>
-                        <h1>INCOMPLETE</h1>
+                    <div class="complete boldText horiFlex smText">
+                        <img src="{% static 'images/square-check-solid.svg' %}" class="smIcon"/>
+                        <h1>COMPLETE</h1>
                     </div>
                     <div>
                     <p id='typeText' class="bold xlText blueText">Addition + Subtraction</p>
-                    <p class="blueText">Current Completion State</p>
+                    <p class="blueText">Correct Questions</p>
                     <div class="horiFlex fullWidth blueText">
                         <p id="completion">
                             1/10
                         </p>
-                        <div class="progressBarContainer">
-                            <div style="width:50%" class="progressBar" id="progressBar"></div>
+                        <div class="progressBarContainerCorrect">
+                            <div style="width:50%" class="progressBarCorrect" id="progressBar"></div>
                         </div>
                     </div>
                 </div>

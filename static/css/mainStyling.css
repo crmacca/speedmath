@@ -193,6 +193,12 @@ a:hover, a:active { text-decoration: none; color:black }
     margin-bottom: 20px;
   }
 
+  #quiz-container {
+    overflow: auto;
+    max-height: 80vh;
+    margin-bottom: 25vh;
+  }
+
 select {
     padding: 15px 20px; /* Updated padding */
     background: white;
@@ -279,6 +285,24 @@ input {
     transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
 }
 
+.progressBarContainerCorrect {
+    width: 100%; /* Width of the progress bar container */
+    background-color: #d42525; /* Background color of the container */
+    border-radius: 8px; /* Optional: Rounds the corners of the container */
+    margin-left: 20px; /* Space between the question number and the progress bar */
+    height: 20px; /* Height of the progress bar container */
+    display: inline-block; /* Align with the question number */
+    vertical-align: middle; /* Align with the question number */
+}
+
+.progressBarCorrect {
+    background-color: #4CAF50; /* Color of the progress bar itself */
+    height: 100%; /* Make the progress bar fill the container */
+    border-radius: 8px; /* Optional: Rounds the corners of the progress bar */
+    width: 0%; /* Initial width of the progress bar */
+    transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
+}
+
 #incorrect {
     color: red;
 }
@@ -309,4 +333,41 @@ input {
 #lgGap {
     gap: 15px;
     column-gap: 15px;
+}
+
+.quizCard {
+    width: 60%;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px rgba(128, 128, 128, 0.598) solid;
+    padding: 20px;
+    padding-right: 40px;
+    border-radius: 15px;
+    color: black;
+    cursor: pointer;
+}
+
+.incomplete {
+    color: rgb(255, 212, 59)
+}
+
+.notstarted {
+    color: rgb(255, 59, 59)
+}
+
+.complete {
+    color: rgb(99, 230, 190);
+}
+
+.smIcon {
+    width: 3vh;
+    height: 3vh;
+}
+
+.smText {
+    font-size: .7rem;
+}
+
+.mxAuto {
+    margin: 0 auto;
 }

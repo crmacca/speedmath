@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core import serializers
 from app.models import Quiz
 from uuid import UUID
 import json
@@ -126,14 +127,26 @@ def generate_questions(config):
     return questions
 
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
 def index(request):
+    # Exclude quizzes where 'unanswered' is an empty list
+    querySetQuizzes = Quiz.objects.filter(user=request.user).exclude(unanswered=[])
 
-    #usersQuizes = []
-    #userQuizes = Quiz.objects.filter(user=request.user)
-    return render(request, "app/index.html")
+    userQuizzes = serializers.serialize('json', querySetQuizzes)
+    return render(request, "app/index.html", {
+        "quizzes": userQuizzes
+    })
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
+def quiz_history(request):
+
+    querySetQuizzes = Quiz.objects.filter(user=request.user, unanswered=[])
+    userQuizzes = serializers.serialize('json', querySetQuizzes)
+    return render(request, "app/quizhistory.html", {
+        "quizzes": userQuizzes
+    })
+
+@login_required(login_url='/users/login')
 def quiz_viewer(request, id):
     if is_valid_uuid(id):
         quizData = Quiz.objects.get(id=id)
@@ -147,7 +160,7 @@ def quiz_viewer(request, id):
                     })
             })
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
 def create_quiz(request):
     if request.method == "POST":
         # Attempt to parse JSON from the request body
@@ -176,7 +189,7 @@ def create_quiz(request):
     # If not POST, indicate the method is not allowed
     return HttpResponseBadRequest("Method not allowed")
 
-@login_required(login_url='/users/login/', redirect_field_name="my_redirect_field")
+@login_required(login_url='/users/login')
 def submit_answer(request):
     if request.method == "POST":
 
@@ -229,3 +242,23 @@ def submit_answer(request):
                     )
             quizData.save()
             return JsonResponse({"success": True, "correct": int(data['answer']) == int(currentQ['answer'])})
+
+@login_required(login_url='/users/login')
+def delete_quiz(request):
+
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+    # Validate that all required fields are present
+    required_fields = ['quizId']
+    if not all(field in data for field in required_fields):
+        return HttpResponseBadRequest("Missing required fields")
+
+    try:
+        quiz = Quiz.objects.get(id=data['quizId'], user=request.user)
+        quiz.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Quiz.DoesNotExist:
+        return JsonResponse({"error": "Quiz not found"}, status=404)

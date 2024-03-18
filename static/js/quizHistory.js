@@ -50,18 +50,15 @@ window.addEventListener('load', async function() {
     const totalQuestions = (Array.isArray(quiz.fields.unanswered) ? quiz.fields.unanswered.length : 0) + 
                            (Array.isArray(quiz.fields.incorrectlyAnswered) ? quiz.fields.incorrectlyAnswered.length : 0) + 
                            (Array.isArray(quiz.fields.correctlyAnswered) ? quiz.fields.correctlyAnswered.length : 0);
+    const correctQuestions = (Array.isArray(quiz.fields.correctlyAnswered) ? quiz.fields.correctlyAnswered.length : 0);
     const answeredQuestions = (Array.isArray(quiz.fields.incorrectlyAnswered) ? quiz.fields.incorrectlyAnswered.length : 0) + 
                               (Array.isArray(quiz.fields.correctlyAnswered) ? quiz.fields.correctlyAnswered.length : 0);
-    const completionPercentage = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
+    const completionPercentage = totalQuestions > 0 ? Math.round((correctQuestions / totalQuestions) * 100) : 0;
   
     clone.querySelector('#typeText').innerHTML = formattedTypes;
-    clone.querySelector('#completion').innerHTML = `${answeredQuestions}/${totalQuestions}`
+    clone.querySelector('#completion').innerHTML = `${correctQuestions}/${totalQuestions}`
     clone.querySelector('#progressBar').style.width = `${completionPercentage}%`
     clone.style.display = 'block'
-
-    if(completionPercentage === 0) {
-      clone.querySelector('.notstarted').style.display = 'flex'
-    } else clone.querySelector('.incomplete').style.display = 'flex'
     
     document.getElementById('quiz-container').appendChild(clone);
 
