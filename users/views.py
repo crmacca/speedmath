@@ -3,12 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
-
-def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    return render(request, "users/user.html")
+from django.shortcuts import redirect 
     
 def login_view(request):
     if request.method == "POST":
