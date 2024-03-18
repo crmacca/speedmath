@@ -59,6 +59,14 @@ window.onload = () => {
 
         answerHolder.style.display = 'flex';
 
+        var progressBarContainer = await document.getElementsByClassName('progressBarContainer')[0]
+        var progressBar = await document.getElementsByClassName('progressBar')[0]
+
+        progressBarContainer.classList.remove('progressBarContainer')
+        progressBarContainer.classList.add('progressBarContainerCorrect')
+        progressBar.className = 'progressBarCorrect'
+        progressBar.style.width = ((correctlyAnswered.length/total) * 100) + '%'
+
         document.getElementById('resultSummary').innerHTML = `You answered ${correctlyAnswered.length} out of ${total} questions correctly${((correctlyAnswered.length/total) * 100) > 50 ? '!' : '.'} (${(correctlyAnswered.length/total) * 100}%)`;
     }
 
