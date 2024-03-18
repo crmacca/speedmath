@@ -129,8 +129,9 @@ def generate_questions(config):
 
 @login_required(login_url='/users/login')
 def index(request):
+    # Exclude quizzes where 'unanswered' is an empty list
+    querySetQuizzes = Quiz.objects.filter(user=request.user).exclude(unanswered=[])
 
-    querySetQuizzes = Quiz.objects.filter(user=request.user)
     userQuizzes = serializers.serialize('json', querySetQuizzes)
     return render(request, "app/index.html", {
         "quizzes": userQuizzes
@@ -139,7 +140,7 @@ def index(request):
 @login_required(login_url='/users/login')
 def quiz_history(request):
 
-    querySetQuizzes = Quiz.objects.filter(user=request.user, unanswered='[]')
+    querySetQuizzes = Quiz.objects.filter(user=request.user, unanswered=[])
     userQuizzes = serializers.serialize('json', querySetQuizzes)
     return render(request, "app/quizhistory.html", {
         "quizzes": userQuizzes
