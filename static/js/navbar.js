@@ -1,4 +1,4 @@
-window.addEventListener('load', async function() {
+window.addEventListener('load', async function () {
     console.log('navbar.js loaded');
     document.getElementById('greetingText').textContent = await getGreeting();
 });

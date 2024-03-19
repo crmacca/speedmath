@@ -1,80 +1,96 @@
 .mainContent {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 500px;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+	max-width: 500px;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
 }
 
 .rowFlex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 .colFlex {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .card {
-    width: 100%;
+	width: 100%;
 }
 
 .successBox {
-    background-color: rgba(47, 206, 89, 0.576);
-    border: 1px rgb(45, 216, 82) solid;
-    color: white;
-    padding: 20px;
-    border-radius: 15px;
-    width: 100%;
+	background-color: rgba(47, 206, 89, 0.576);
+	border: 1px rgb(45, 216, 82) solid;
+	color: white;
+	padding: 20px;
+	border-radius: 15px;
+	width: 100%;
 }
 
 .errorBox {
-    background-color: rgba(255, 71, 71, 0.576);
-    border: 1px rgb(255, 110, 110) solid;
-    color: white;
-    padding: 20px;
-    border-radius: 15px;
-    width: 100%;
+	background-color: rgba(255, 71, 71, 0.576);
+	border: 1px rgb(255, 110, 110) solid;
+	color: white;
+	padding: 20px;
+	border-radius: 15px;
+	width: 100%;
 }
-  
+
 .smTitle {
-    font-size: 1rem;
-    font-weight: 700;
+	font-size: 1rem;
+	font-weight: 700;
 }
 .smBody {
-    font-size: 0.8rem;
-    font-weight: 500;
+	font-size: 0.8rem;
+	font-weight: 500;
 }
 
 /* START ONLINE CSS COPY */
 /* PUSPOSE OF CODE: REMOVE BLUE AND PURPLE COLOURING FROM HYPERLINKS */
 /* Source: https://stackoverflow.com/a/10312896/13743859 */
 
-a { color: black; text-decoration: none;}
+a {
+	color: black;
+	text-decoration: none;
+}
 
-a:visited { text-decoration: none; color:black; }
-a:hover { text-decoration: none; color:black; }
-a:focus { text-decoration: none; color:black; }
-a:hover, a:active { text-decoration: none; color:black }
+a:visited {
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+a:focus {
+	text-decoration: none;
+	color: black;
+}
+a:hover,
+a:active {
+	text-decoration: none;
+	color: black;
+}
 /* END ONLINE CSS COPY */
 
 /* Media Query for Mobile Devices */
 @media (max-width: 600px) {
-    .mainContent {
-        width: 90%;
-        max-width: none;
-    }
+	.mainContent {
+		width: 90%;
+		max-width: none;
+	}
 }
 
 .hyperlink {
-    text-decoration: underline;
-    font-size: small;
-    cursor: pointer;
+	text-decoration: underline;
+	font-size: small;
+	cursor: pointer;
 }

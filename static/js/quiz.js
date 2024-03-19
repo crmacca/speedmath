@@ -8,7 +8,7 @@ window.onload = () => {
     function decodeHtmlEntity(encodedJson) {
         const decodedJson = encodedJson.replace(/&quot;/g, '"');
         return decodedJson;
-      }
+    }
 
     var dataString = JSON.parse(decodeHtmlEntity(quizData));
     questions = dataString.unanswered;
@@ -29,14 +29,20 @@ window.onload = () => {
 
     async function displayAnswers() {
         var combinedQuestions = []
-        combinedQuestions.push(...incorrectlyAnswered.map((q) => ({...q, correct: false})));
-        combinedQuestions.push(...correctlyAnswered.map((q) => ({...q, correct: true})));
+        combinedQuestions.push(...incorrectlyAnswered.map((q) => ({
+            ...q,
+            correct: false
+        })));
+        combinedQuestions.push(...correctlyAnswered.map((q) => ({
+            ...q,
+            correct: true
+        })));
         combinedQuestions.sort((a, b) => a.id - b.id);
 
         var questionTemplate = await document.getElementById('questionTemplate');
         var answerHolder = await document.getElementById('results');
 
-        for(question of combinedQuestions) {
+        for (question of combinedQuestions) {
             var clone = questionTemplate.cloneNode(true);
             clone.id = `question-${question.id}`;
 
@@ -49,11 +55,10 @@ window.onload = () => {
             questionNumber.innerHTML = `Question ${question.id}`;
             questionText.innerHTML = question.question;
             questionAnswer.value = question.correct ? question.answer : question.userAnswer;
-            
-            if(question.correct) {
+
+            if (question.correct) {
                 questionCorrect.style.display = 'block';
-            }
-            else {
+            } else {
                 questionIncorrect.style.display = 'block';
                 questionIncorrect.innerHTML = `❌ ${question.answer}`;
             }
@@ -69,7 +74,7 @@ window.onload = () => {
         progressBarContainer.classList.remove('progressBarContainer')
         progressBarContainer.classList.add('progressBarContainerCorrect')
         progressBar.className = 'progressBarCorrect'
-        progressBar.style.width = ((correctlyAnswered.length/total) * 100) + '%'
+        progressBar.style.width = ((correctlyAnswered.length / total) * 100) + '%'
 
         document.getElementById('resultSummary').innerHTML = `You answered ${correctlyAnswered.length} out of ${total} questions correctly${((correctlyAnswered.length/total) * 100) > 50 ? '!' : '.'} (${(correctlyAnswered.length/total) * 100}%)`;
     }
@@ -91,69 +96,72 @@ window.onload = () => {
 
             return false;
         }
-        
-        var current = await questions.shift();  
+
+        var current = await questions.shift();
         currentQuestion = current;
-        
+
         questionText.innerHTML = current.question;
-        answerInput.value = '';      
-    
+        answerInput.value = '';
+
         updateProgress();
-    
+
         return current;
-    }    
+    }
 
     getNextQuestion();
 
     var form = document.getElementById('quizForm')
-    form.onsubmit = function(e) {
+    form.onsubmit = function (e) {
         e.preventDefault();
         submitButton.disabled = true;
 
         fetch('/quiz/submit', {
-            method: 'POST',
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                quizId: dataString.id,
-                answer: answerInput.value,
-                questionId: currentQuestion.id
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quizId: dataString.id,
+                    answer: answerInput.value,
+                    questionId: currentQuestion.id
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success === false) {
-                alert(data.message || 'An error occurred while submitting your answer, please reload the page.');
-                outOfSync = true;
-            } else {
-                if(data.correct === true) {
-                    correct.style.display = 'block';
-                    correctlyAnswered.push(currentQuestion);
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === false) {
+                    alert(data.message || 'An error occurred while submitting your answer, please reload the page.');
+                    outOfSync = true;
                 } else {
-                    incorrect.innerHTML = `❌ ${currentQuestion.answer}`;
-                    incorrect.style.display = 'block';
-                    incorrectlyAnswered.push({...currentQuestion, userAnswer: parseInt(answerInput.value)});
+                    if (data.correct === true) {
+                        correct.style.display = 'block';
+                        correctlyAnswered.push(currentQuestion);
+                    } else {
+                        incorrect.innerHTML = `❌ ${currentQuestion.answer}`;
+                        incorrect.style.display = 'block';
+                        incorrectlyAnswered.push({
+                            ...currentQuestion,
+                            userAnswer: parseInt(answerInput.value)
+                        });
+                    }
+
+                    updateProgress();
                 }
 
-                updateProgress();
-            }
-            
-            setTimeout(() => {
-                if(outOfSync) {
-                    return window.location.reload();
-                } else {
-                    correct.style.display = 'none';
-                    incorrect.style.display = 'none';
-                    submitButton.disabled = false;
-                    getNextQuestion();
-                }
-            }, 1000);
-        });
+                setTimeout(() => {
+                    if (outOfSync) {
+                        return window.location.reload();
+                    } else {
+                        correct.style.display = 'none';
+                        incorrect.style.display = 'none';
+                        submitButton.disabled = false;
+                        getNextQuestion();
+                    }
+                }, 1000);
+            });
     }
 
-    answerInput.onkeyup = function(e) {
+    answerInput.onkeyup = function (e) {
         answerInput.value = e.target.value.replace(/[^-\d]/g, '');
     }
 
@@ -163,24 +171,24 @@ window.onload = () => {
     var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     // When the user clicks the button, open the modal
-    deleteBtn.onclick = function() {
+    deleteBtn.onclick = function () {
         deleteModal.style.display = 'block';
     }
 
     // When the user clicks on <span> (x), close the modal
-    closeSpan.onclick = function() {
+    closeSpan.onclick = function () {
         deleteModal.style.display = 'none';
     }
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == deleteModal) {
             deleteModal.style.display = 'none';
         }
     }
 
     // Handle quiz deletion
-    confirmDeleteBtn.onclick = async function() {
+    confirmDeleteBtn.onclick = async function () {
         // Add your logic to delete the quiz. This might involve sending a request to your server and then redirecting the user or updating the UI accordingly.
         console.log('Quiz deletion confirmed');
 
@@ -191,10 +199,12 @@ window.onload = () => {
                 "X-CSRFToken": getCookie("csrftoken"),
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ quizId: dataString.id }) // Make sure to replace 'yourQuizId' with the actual quiz ID
+            body: JSON.stringify({
+                quizId: dataString.id
+            }) // Make sure to replace 'yourQuizId' with the actual quiz ID
         });
 
-        if(response.ok) {
+        if (response.ok) {
             // Handle success response
             console.log('Quiz deleted successfully');
             window.location.href = '/'; // Redirect to home or another appropriate page
@@ -210,7 +220,7 @@ function getCookie(cname) { // CHATGPT generated this to isolate the csrf out of
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);

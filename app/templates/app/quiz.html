@@ -1,112 +1,112 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>SpeedMath | Quiz</title>
-        <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-        <script>
-            let quizData = "{{ quizData }}"
-        </script>
-        <script src="{% static 'js/navbar.js' %}"></script>
-        <script src="{% static 'js/quiz.js' %}"></script>
-    </head>
-    <body
+	<head>
+		<title>SpeedMath | Quiz</title>
+		<link href="{% static 'css/mainStyling.css' %}" rel="stylesheet" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="{% static 'images/favicon.ico' %}"
+		/>
+		<script>
+			let quizData = "{{ quizData }}";
+		</script>
+		<script src="{% static 'js/navbar.js' %}"></script>
+		<script src="{% static 'js/quiz.js' %}"></script>
+	</head>
+	<body <!-- Delete Quiz Confirmation Modal -->
+		<div id="deleteModal" class="modal">
+			<div class="modal-content">
+				<div class="horiFlex mb2">
+					<p class="bold">Are you sure you want to delete this quiz?</p>
+					<span class="close mlAuto">&times;</span>
+				</div>
+				<button id="confirmDeleteBtn" class="navButtonDanger">Delete</button>
+			</div>
+		</div>
 
-        <!-- Delete Quiz Confirmation Modal -->
-        <div id="deleteModal" class="modal">
-            <div class="modal-content">
-                <div class="horiFlex mb2">
-                    <p class="bold">Are you sure you want to delete this quiz?</p>
-                    <span class="close mlAuto">&times;</span>
-                </div>
-                <button id="confirmDeleteBtn" class="navButtonDanger">Delete</button>
-            </div>
-        </div>
+		<div class="bg">
+			<div class="navbar">
+				<img
+					src="{% static 'images/brandText.png' %}"
+					alt="SpeedMath Logo"
+					class="smLogo"
+				/>
+				{% if request.user.is_authenticated %}
+				<div class="vertFlex">
+					<p class="bold lgText" id="greetingText">Good morning,</p>
+					<p>@{{ request.user.username }}</p>
+				</div>
+				{% endif %}
+				<a class="mlAuto pointer" href="/">
+					<button id="" class="navButton">Exit Quiz</button>
+				</a>
+				<button id="deleteQuizBtn" class="navButtonDanger">Delete Quiz</button>
+			</div>
 
+			<div class="scrollPadding">
+				<div class="quizContainer">
+					<div class="quizHeader">
+						<div class="mb2 horiFlex justifyStart">
+							<h1 id="currentQuestionNumber">-</h1>
 
-        <div class="bg">
-            <div class="navbar">
-                <img src="{% static 'images/brandText.png' %}" alt="SpeedMath Logo" class="smLogo">
-                {% if request.user.is_authenticated %}
-                    <div class="vertFlex">
-                        <p class="bold lgText" id="greetingText" >Good morning,</p>
-                        <p>@{{ request.user.username }}</p>
-                    </div>
-                {% endif %}
-                <a class="mlAuto pointer" href="/">
-                    <button id="" class="navButton">
-                        Exit Quiz
-                    </button>
-                </a>
-                <button id="deleteQuizBtn" class="navButtonDanger">
-                    Delete Quiz
-                </button>
-            </div>
+							<div class="progressBarContainer">
+								<div class="progressBar" id="progressBar"></div>
+							</div>
+						</div>
+						<form id="quizForm" class="fullWidth">
+							<div>
+								<h1 class="lgText bold">Quiz</h1>
+								<p class="mdText mb2">
+									Answer the following questions as quickly as possible.
+								</p>
+							</div>
+							<div class="horiFlex mb2 fullWidth justifyCentre">
+								<label id="formQuestion" class="xxlText">Question Loading... </label>
+								<input
+									autocomplete="off"
+									id="formInput"
+									maxlength="4"
+									class="quizInput xlText"
+									required
+								/>
+								<h1 class="hidden" id="correct">✅</h1>
+								<h1 class="hidden" id="incorrect">❌</h1>
+							</div>
+							<button id="submitQuizBtn" class="fullWidth" type="submit">
+								Submit
+							</button>
+						</form>
 
-            <div class="scrollPadding">
-                <div class="quizContainer">
-                    <div class="quizHeader">
-                        <div class="mb2 horiFlex justifyStart">
-                            <h1 id="currentQuestionNumber">-</h1>
+						<div id="results" class="vertFlex lgGap">
+							<div>
+								<p class="bold xxlText">Results</p>
+								<p class="xlText" id="resultSummary">Loading...</p>
+							</div>
+							<div id="questionTemplate" class="question">
+								<h1 id="questionNumber" class="lgText bold mb2">Question 1</h1>
+								<div class="horiFlex mb2 fullWidth justifyStart">
+									<label id="questionText" class="xlText">2+2 = </label>
+									<input
+										disabled="true"
+										id="questionAnswer"
+										maxlength="4"
+										class="quizInput xlText"
+										value="4"
+									/>
+									<h1 class="hidden" id="correct">✅</h1>
+									<h1 class="hidden" id="incorrect">❌</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                            <div class="progressBarContainer">
-                                <div class="progressBar" id="progressBar"></div>
-                            </div>
-                        </div>
-                        <form id="quizForm" class="fullWidth">
-                            <div>
-                                <h1 class="lgText bold">Quiz</h1>
-                                <p class="mdText mb2">Answer the following questions as quickly as possible.</p>
-                            </div>
-                            <div class="horiFlex mb2 fullWidth justifyCentre">
-                                <label id="formQuestion" class="xxlText">Question Loading... </label>
-                                <input autocomplete="off" id="formInput" maxlength="4" class="quizInput xlText" required>
-                                <h1 class="hidden" id="correct">
-                                    ✅
-                                </h1>
-                                <h1 class="hidden" id="incorrect">
-                                    ❌
-                                </h1>
-                            </div>
-                            <button id="submitQuizBtn" class="fullWidth" type="submit">
-                                Submit
-                            </button>
-                        </form>
-
-                        <div id="results" class="vertFlex lgGap">
-                            <div>
-                                <p class="bold xxlText">
-                                    Results
-                                </p>
-                                <p class="xlText" id="resultSummary">
-                                    Loading...
-                                </p>
-                            </div>
-                            <div id="questionTemplate" class="question">
-                                <h1 id="questionNumber" class="lgText bold mb2">Question 1</h1>
-                                <div class="horiFlex mb2 fullWidth justifyStart">
-                                    <label id="questionText" class="xlText">2+2 = </label>
-                                    <input disabled="true" id="questionAnswer" maxlength="4" class="quizInput xlText" value="4">
-                                    <h1 class="hidden" id="correct">
-                                        ✅
-                                    </h1>
-                                    <h1 class="hidden" id="incorrect">
-                                        ❌
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            
-            <div class="simpleFooter" style="border-top: 1px solid rgb(37, 107, 188);">
-                <p>
-                    © 2024 Christian McNamara
-                </p>
-            </div>
-        </div>
-    </body>
+			<div class="simpleFooter" style="border-top: 1px solid rgb(37, 107, 188)">
+				<p>© 2024 Christian McNamara</p>
+			</div>
+		</div>
+	</body>
 </html>

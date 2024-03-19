@@ -1,38 +1,55 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>SpeedMath | Log In</title>
-        <link href="{% static 'css/mainStyling.css' %}" rel="stylesheet">
-        <link href="{% static 'users/loginStyling.css' %}" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    </head>
-    <body>
-        <div class="mainContent">
-            <div class="rowFlex">
-                <img src="{% static 'images/brandText.png' %}" class="xlLogo"/>
-            </div>
-            {% if message %}
-                <div class="{{ message.class }}">
-                    <p class="smTitle">{{ message.type }}</p>
-                    <p class="smBody">{{ message.text }}</p>
-                </div>
-            {% endif %}
-            <form class="colFlex card" action="{% url 'signup' %}" method="post">
-                {% csrf_token %}
-                <input class="inputField" type="text" name="username" placeholder="Username">
-                <input class="inputField" type="password" name="password" placeholder="Password">
-                <input class="inputField" type="password" name="confirmPassword" placeholder="Confirm Password">
-                <button type="submit">Create my account!</button>
-                <a class="hyperlink" href="{% url 'login' %}">
-                    Already have an account? Login
-                </a>
-            </form>
-        </div>
-        <div class="simpleFooter">
-            <p>
-                © 2024 Christian McNamara
-            </p>
-        </div>
-    </body>
+	<head>
+		<title>SpeedMath | Log In</title>
+		<link href="{% static 'css/mainStyling.css' %}" rel="stylesheet" />
+		<link href="{% static 'users/loginStyling.css' %}" rel="stylesheet" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="{% static 'images/favicon.ico' %}"
+		/>
+	</head>
+	<body>
+		<div class="mainContent">
+			<div class="rowFlex">
+				<img src="{% static 'images/brandText.png' %}" class="xlLogo" />
+			</div>
+			{% if message %}
+			<div class="{{ message.class }}">
+				<p class="smTitle">{{ message.type }}</p>
+				<p class="smBody">{{ message.text }}</p>
+			</div>
+			{% endif %}
+			<form class="colFlex card" action="{% url 'signup' %}" method="post">
+				{% csrf_token %}
+				<input
+					class="inputField"
+					type="text"
+					name="username"
+					placeholder="Username"
+				/>
+				<input
+					class="inputField"
+					type="password"
+					name="password"
+					placeholder="Password"
+				/>
+				<input
+					class="inputField"
+					type="password"
+					name="confirmPassword"
+					placeholder="Confirm Password"
+				/>
+				<button type="submit">Create my account!</button>
+				<a class="hyperlink" href="{% url 'login' %}">
+					Already have an account? Login
+				</a>
+			</form>
+		</div>
+		<div class="simpleFooter">
+			<p>© 2024 Christian McNamara</p>
+		</div>
+	</body>
 </html>
