@@ -20,7 +20,6 @@
             {% endif %}
             <form class="colFlex card" action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
-                <input class="inputField" type="text" name="name" placeholder="Name">
                 <input class="inputField" type="text" name="username" placeholder="Username">
                 <input class="inputField" type="password" name="password" placeholder="Password">
                 <input class="inputField" type="password" name="confirmPassword" placeholder="Confirm Password">

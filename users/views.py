@@ -36,7 +36,6 @@ def logout_view(request):
 
 def signup_view(request):
     if request.method == "POST":
-        name = request.POST.get("name")
         username = request.POST.get("username")
         password = request.POST.get("password")
         confirmPassword = request.POST.get("confirmPassword")
@@ -45,9 +44,6 @@ def signup_view(request):
             try:
                 user = User.objects.create_user(username, password)
                 user.save()
-                
-                user.profile.name = name
-                user.profile.save()
 
                 login(request, user)
                 return redirect('/')
