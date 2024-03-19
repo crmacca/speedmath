@@ -1,10 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import redirect 
-    
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -40,26 +39,35 @@ def signup_view(request):
         password = request.POST.get("password")
         confirmPassword = request.POST.get("confirmPassword")
 
-        if password == confirmPassword:
-            try:
-                user = User.objects.create_user(username, password)
-                user.save()
+        if User.objects.filter(username=username).exists():
+            return render(request, "users/signup.html", {
+                "message": {
+                    "text": "Username already exists. Please choose a different username.",
+                    "type": "Error",
+                    "class": "errorBox"
+                }
+            })
 
-                login(request, user)
-                return redirect('/')
-            except Exception as e:
-                print("Unable to create user:", e)
-                return render(request, "users/signup.html", {
-                    "message": {
-                        "text": str(e),
-                        "type": "Error",
-                        "class": "errorBox"
-                    }
-                })
-        else:
+        if password != confirmPassword:
             return render(request, "users/signup.html", {
                 "message": {
                     "text": "Passwords do not match.",
+                    "type": "Error",
+                    "class": "errorBox"
+                }
+            })
+
+        try:
+            user = User.objects.create_user(username=username, email=None, password=password)
+            user.save()
+
+            login(request, user)
+            return redirect('/')
+        except Exception as e:
+            print("Unable to create user:", e)
+            return render(request, "users/signup.html", {
+                "message": {
+                    "text": "An unexpected error occurred. Please try again later.",
                     "type": "Error",
                     "class": "errorBox"
                 }
