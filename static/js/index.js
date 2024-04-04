@@ -1,33 +1,24 @@
-// Event listener for when the window finishes loading
 window.addEventListener('load', async function() {
-	// Log a message indicating that index.js has been loaded
 	console.log('index.js loaded');
 
-	// Function to decode HTML entities in the JSON data
 	function decodeHtmlEntity(encodedJson) {
 		const decodedJson = encodedJson.replace(/&quot;/g, '"');
 		return decodedJson;
 	}
 
-	// Parse the JSON data and assign it to the quizData variable
 	const quizData = await JSON.parse(decodeHtmlEntity(quizzes))
 
-	// Get reference to the quiz template element
 	var template = document.getElementById('quiz-template');
 
-	// Display a message if no quizzes are found
 	if (quizData.length === 0) {
 		document.getElementById('noQuizFound').style.display = 'block'
 	}
 
-	// Iterate over each quiz in the quizData array
 	for (const quiz of quizData) {
 		console.log(quiz);
-		// Clone the quiz template
 		const clone = template.cloneNode(true);
 		clone.id = quiz.pk;
 
-		// Set up a set to store unique types of questions
 		const typesSet = new Set();
 
 		// Helper function to add question types to the set
@@ -39,7 +30,6 @@ window.addEventListener('load', async function() {
 			}
 		};
 
-		// Add types of questions to the set
 		addTypes(quiz.fields.unanswered);
 		addTypes(quiz.fields.incorrectlyAnswered);
 		addTypes(quiz.fields.correctlyAnswered);
@@ -49,15 +39,14 @@ window.addEventListener('load', async function() {
 			return word.charAt(0).toUpperCase() + word.slice(1);
 		};
 
-		// Capitalize each type of question
-		const types = [...typesSet].map(type => capitalizeFirstLetter(type));
+		const types = [...typesSet].map(type => capitalizeFirstLetter(type)); // Capitalize each type
 
 		// Formatting types array into a string with commas and an '&' before the last type
 		let formattedTypes = types.length > 1 ?
 			types.slice(0, -1).join(', ') + ' & ' + types.slice(-1) :
 			types.join('');
 
-		// Calculate completion details for the quiz
+		// Calculate completion
 		const totalQuestions = (Array.isArray(quiz.fields.unanswered) ? quiz.fields.unanswered.length : 0) +
 			(Array.isArray(quiz.fields.incorrectlyAnswered) ? quiz.fields.incorrectlyAnswered.length : 0) +
 			(Array.isArray(quiz.fields.correctlyAnswered) ? quiz.fields.correctlyAnswered.length : 0);
@@ -65,54 +54,45 @@ window.addEventListener('load', async function() {
 			(Array.isArray(quiz.fields.correctlyAnswered) ? quiz.fields.correctlyAnswered.length : 0);
 		const completionPercentage = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
 
-		// Set up the HTML elements in the cloned quiz template
 		clone.querySelector('#typeText').innerHTML = formattedTypes;
 		clone.querySelector('#completion').innerHTML = `${answeredQuestions}/${totalQuestions}`
 		clone.querySelector('#progressBar').style.width = `${completionPercentage}%`
 		clone.style.display = 'block'
 
-		// Display appropriate status based on completion percentage
 		if (completionPercentage === 0) {
 			clone.querySelector('.notstarted').style.display = 'flex'
 		} else clone.querySelector('.incomplete').style.display = 'flex'
 
-		// Append the cloned quiz template to the quiz container
 		document.getElementById('quiz-container').appendChild(clone);
 
-		// Redirect to quiz page when a quiz is clicked
 		clone.onclick = () => {
 			window.location.pathname = `/quiz/${quiz.pk}`
 		}
 	}
 
-	// Get references to modal elements
+
 	var modal = document.getElementById("createModal");
 	var btn = document.getElementById("createQuizBtn");
 	var span = document.getElementsByClassName("close")[0];
 
-	// Display modal when create quiz button is clicked
 	btn.onclick = function() {
 		modal.style.display = "block";
 	}
 
-	// Close modal when close button is clicked
 	span.onclick = function() {
 		modal.style.display = "none";
 	}
 
-	// Close modal when user clicks outside of it
 	window.onclick = function(event) {
 		if (event.target == modal) {
 			modal.style.display = "none";
 		}
 	}
 
-	// Handle form submission for creating a quiz
 	var createForm = document.getElementById("createForm");
 	createForm.onsubmit = async function(e) {
 		e.preventDefault(); //Prevents the form from submitting an API request.
 
-		// Check if any math type is selected
 		var isAnyMathTypeSelected =
 			document.getElementById('addition').checked ||
 			document.getElementById('subtraction').checked ||
@@ -125,7 +105,6 @@ window.addEventListener('load', async function() {
 			return
 		}
 
-		// Extract form values
 		let questions = e.target[0].value;
 		let difficulty = e.target[1].value;
 		let mathTypes = [];
@@ -144,7 +123,6 @@ window.addEventListener('load', async function() {
 
 		let shuffle = e.target[6].checked;
 
-		// Create JSON payload
 		const jsonPayload = {
 			questions: parseInt(questions),
 			difficulty: parseInt(difficulty),
@@ -152,10 +130,8 @@ window.addEventListener('load', async function() {
 			shuffle: shuffle
 		}
 
-		// Log the JSON payload
 		console.log(jsonPayload)
 
-		// Send POST request to create a new quiz
 		const response = await fetch('/createquiz', {
 				method: "POST",
 				headers: {
@@ -165,7 +141,6 @@ window.addEventListener('load', async function() {
 			})
 			.then(response => response.json())
 			.then(data => {
-				// Redirect to the newly created quiz page
 				window.location.pathname = `/quiz/${data.quizId}`;
 			});
 
@@ -173,7 +148,6 @@ window.addEventListener('load', async function() {
 
 });
 
-// Function to retrieve a specific cookie by name
 function getCookie(cname) {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
